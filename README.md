@@ -1,7 +1,7 @@
 # PHP Helpers: String Functions
 
--   Version: v1.0.0
--   Date: May 09 2019
+-   Version: v1.1.0
+-   Date: May 23 2019
 -   [Release notes](https://github.com/pointybeard/helpers-functions-strings/blob/master/CHANGELOG.md)
 -   [GitHub repository](https://github.com/pointybeard/helpers-functions-strings)
 
@@ -18,7 +18,7 @@ And run composer to update your dependencies:
 
 ### Requirements
 
-There are no particuar requirements for this library other than PHP 5.6 or greater.
+There are no particuar requirements for this library other than PHP 7.2 or greater.
 
 To include all the [PHP Helpers](https://github.com/pointybeard/helpers) packages on your project, use `composer require pointybeard/helpers` or add `"pointybeard/helpers": "~1.0"` to your composer file.
 
@@ -31,6 +31,7 @@ The following functions are provided:
 -   `utf8_wordwrap() : string`
 -   `utf8_wordwrap_array() : array`
 -   `type_sensitive_strval() : string`
+-   `mb_str_pad(string $input, int $pad_length, string $pad_string = ' ', int $pad_type = STR_PAD_RIGHT, string $encoding = null): string`
 
 Example usage:
 
@@ -67,6 +68,16 @@ var_dump(Strings\type_sensitive_strval([1,2,3,4]));
 
 var_dump(Strings\type_sensitive_strval(new \stdClass));
 // string(6) "object"
+
+var_dump(Strings\mb_str_pad("Apple", 11, "àèò", STR_PAD_LEFT, "UTF-8"));
+// string(17) "àèòàèòApple"
+
+var_dump(Strings\mb_str_pad("Banana", 11, "àèò", STR_PAD_RIGHT, "UTF-8"));
+// string(16) "Bananaàèòàè"
+
+var_dump(Strings\mb_str_pad("Pear", 11, "àèò", STR_PAD_BOTH, "UTF-8"));
+// string(18) "àèòPearàèòà"
+
 ```
 
 ## Support
