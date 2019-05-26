@@ -111,7 +111,7 @@ if (!function_exists(__NAMESPACE__.'mb_str_pad')) {
         $repeatTimes = max(0, ceil($targetLength / mb_strlen($pad_string, $encoding)));
 
         // safe if used with valid unicode sequences (any charset)
-        $repeatedString = str_repeat($pad_string, (int)$repeatTimes);
+        $repeatedString = str_repeat($pad_string, (int) $repeatTimes);
 
         $before = (
             true == $padBefore
@@ -126,5 +126,48 @@ if (!function_exists(__NAMESPACE__.'mb_str_pad')) {
         );
 
         return "{$before}{$input}{$after}";
+    }
+}
+
+if (!function_exists(__NAMESPACE__.'replace_placeholders_in_string')) {
+    /**
+     * Replaces all placeholder values in a string with given replacements.
+     *
+     * @param array  $placeholders array containing the names of all
+     *                             placeholders to replace
+     * @param array  $replacements corresponding array of replacement values
+     * @param string $input        the string to operate on
+     * @param bool   $clean        if set to true, unused placeholder values
+     *                             (i.e. were not in $placeholders) in $input
+     *                             will be removed. Default is false
+     * @param string $open         opening tag for a placeholder. Default
+     *                             is '{{'
+     * @param string $close        closing tag for a placeholder. Default
+     *                             is '}}'
+     *
+     * @return string a string with placeholders replaced
+     */
+    function replace_placeholders_in_string(array $placeholders, array $replacements, string $input, bool $clean = false, string $open = '{{', string $close = '}}'): string
+    {
+        $placeholders = array_map(
+            function ($value) use ($open, $close) {
+                return "{$open}{$value}{$close}";
+            },
+            $placeholders
+        );
+        $replace = array_values($placeholders);
+
+        $output = str_replace($placeholders, $replacements, $input);
+
+        if (true == $clean) {
+            $output = preg_replace(sprintf(
+                '@%s[^%s]+%s@',
+                preg_quote($open),
+                preg_quote($close[0]),
+                preg_quote($close)
+            ), '', $output);
+        }
+
+        return $output;
     }
 }
