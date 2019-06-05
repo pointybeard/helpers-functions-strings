@@ -1,7 +1,7 @@
 # PHP Helpers: String Functions
 
--   Version: v1.1.1
--   Date: May 26 2019
+-   Version: v1.1.2
+-   Date: June 05 2019
 -   [Release notes](https://github.com/pointybeard/helpers-functions-strings/blob/master/CHANGELOG.md)
 -   [GitHub repository](https://github.com/pointybeard/helpers-functions-strings)
 
@@ -9,7 +9,7 @@ A collection of functions for manipulating strings
 
 ## Installation
 
-This library is installed via [Composer](http://getcomposer.org/). To install, use `composer require pointybeard/helpers-functions-strings` or add `"pointybeard/helpers-functions-strings": "~1.1"` to your `composer.json` file.
+This library is installed via [Composer](http://getcomposer.org/). To install, use `composer require pointybeard/helpers-functions-strings` or add `"pointybeard/helpers-functions-strings": "~1.1.0"` to your `composer.json` file.
 
 And run composer to update your dependencies:
 
@@ -20,7 +20,7 @@ And run composer to update your dependencies:
 
 There are no particuar requirements for this library other than PHP 7.2 or greater.
 
-To include all the [PHP Helpers](https://github.com/pointybeard/helpers) packages on your project, use `composer require pointybeard/helpers` or add `"pointybeard/helpers": "~1.1"` to your composer file.
+To include all the [PHP Helpers](https://github.com/pointybeard/helpers) packages on your project, use `composer require pointybeard/helpers` or add `"pointybeard/helpers": "~1.1.0"` to your composer file.
 
 ## Usage
 
@@ -33,6 +33,8 @@ The following functions are provided:
 -   `type_sensitive_strval`
 -   `mb_str_pad`
 -   `replace_placeholders_in_string`
+-   `random_string`
+-   `random_unique_classname`
 
 Example usage:
 
@@ -101,6 +103,19 @@ var_dump(Strings\replace_placeholders_in_string(
     ']'
 ));
 // string(23) "apple, banana, orange, "
+
+var_dump(Strings\random_string(15));
+// string(15) "cTAPWAi2EOCop2N"
+
+try {
+    var_dump(Strings\random_string(8, '@[^-]@i'));
+} catch (Error $ex) {
+    echo 'Error generating random string. returned: '.$ex->getMessage().PHP_EOL;
+}
+// Error generating random string. returned: minimal characters generated. filter '@[^-]@i' might be too restrictive
+
+var_dump(Strings\random_unique_classname('test', '\\MyApp'));
+// string(36) "testOIXwzi9D6bAbvy5y9QYoayS2kabbBh56"
 
 ```
 
