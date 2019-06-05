@@ -171,3 +171,59 @@ if (!function_exists(__NAMESPACE__.'replace_placeholders_in_string')) {
         return $output;
     }
 }
+
+if (!function_exists(__NAMESPACE__.'random_string')) {
+    /**
+     * Generates a pseudo-random string of specified length.
+     *
+     * @param int    $length total string length (in characters)
+     * @param string $filter runs this filter with preg_replace to remove
+     *                       unwanted characters (default is NULL)
+     *
+     * @return string the resultant, pseudo-random string
+     */
+    function random_string(int $length = 32, string $filter = null): string
+    {
+        $string = base64_encode(random_bytes($length * 3));
+        if (null !== $filter) {
+            $string = preg_replace($filter, '', $string);
+
+            // See if the filtered string is less than 10% of $length
+            // and if it is, throw an exception since it likely means
+            // the recursion limit will be hit
+            if (strlen($string) < $length * 0.1) {
+                throw new \Error("minimal characters generated. filter '{$filter}' might be too restrictive");
+            }
+
+            while (strlen($string) < $length) {
+                $string .= random_string($length - strlen($string), $filter);
+            }
+        }
+
+        return substr($string, 0, $length);
+    };
+}
+
+if (!function_exists(__NAMESPACE__.'random_unique_classname')) {
+    /**
+     * Simple way to produce a unique class name.
+     *
+     * @param string $prefix    This string will be prepended to the randomly
+     *                          generated part of the class name. Can only
+     *                          contain characters normally allowed in class
+     *                          names (default is 'a')
+     * @param string $namespace namespace to use when checking for uniqueness.
+     *                          note this is not included in the resultant
+     *                          string (default is NULL)
+     *
+     * @return string A unique, valid, class name string
+     */
+    function random_unique_classname(string $prefix = 'a', string $namespace = null): string
+    {
+        do {
+            $classname = $prefix.random_string(32, '@[^a-zA-Z0-9_\x80-\xff]@');
+        } while (class_exists("{$namespace}\\{$classname}"));
+
+        return $classname;
+    };
+}
