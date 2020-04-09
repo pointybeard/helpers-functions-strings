@@ -1,7 +1,7 @@
 # PHP Helpers: String Functions
 
--   Version: v1.1.2
--   Date: June 05 2019
+-   Version: v1.1.3
+-   Date: April 10 2020
 -   [Release notes](https://github.com/pointybeard/helpers-functions-strings/blob/master/CHANGELOG.md)
 -   [GitHub repository](https://github.com/pointybeard/helpers-functions-strings)
 
@@ -20,7 +20,7 @@ And run composer to update your dependencies:
 
 There are no particuar requirements for this library other than PHP 7.2 or greater.
 
-To include all the [PHP Helpers](https://github.com/pointybeard/helpers) packages on your project, use `composer require pointybeard/helpers` or add `"pointybeard/helpers": "~1.1.0"` to your composer file.
+To include all the [PHP Helpers](https://github.com/pointybeard/helpers) packages on your project, use `composer require pointybeard/helpers` or add `"pointybeard/helpers": "~1.2.0"` to your composer file.
 
 ## Usage
 
@@ -35,6 +35,7 @@ The following functions are provided:
 -   `replace_placeholders_in_string`
 -   `random_string`
 -   `random_unique_classname`
+-   `encode_ampersands`
 
 Example usage:
 
@@ -117,6 +118,11 @@ try {
 var_dump(Strings\random_unique_classname('test', '\\MyApp'));
 // string(36) "testOIXwzi9D6bAbvy5y9QYoayS2kabbBh56"
 
+var_dump(Strings\encode_ampersands("10 &lt; 15 & 5 &gt; 1. &#x1234;"));
+// string(35) "10 &lt; 15 &amp; 5 &gt; 1. &#x1234;"
+
+var_dump(Strings\encode_ampersands('Apples & bananàs and pickles &amp; cheese.'));
+// string(47) "Apples &amp; bananàs and pickles &amp; cheese."
 ```
 
 ## Support

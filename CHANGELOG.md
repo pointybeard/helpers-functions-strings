@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.3][]
+#### Added
+-   Added `encode_ampersands` functions
+
 ## [1.1.2][]
 #### Added
 -   Added `random_string` and `random_unique_classname` functions
@@ -21,7 +25,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 1.0.0
 #### Added
 -   Initial release
-
+-
+[1.1.3]: https://github.com/pointybeard/helpers-functions-strings/compare/1.1.2...1.1.3
 [1.1.2]: https://github.com/pointybeard/helpers-functions-strings/compare/1.1.1...1.1.2
 [1.1.1]: https://github.com/pointybeard/helpers-functions-strings/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/pointybeard/helpers-functions-strings/compare/1.0.0...1.1.0
