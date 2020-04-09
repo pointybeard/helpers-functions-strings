@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace pointybeard\Helpers\Functions\Strings;
 
-/*
- * Credit to ju1ius for original version of this method
- * https://www.php.net/manual/en/function.wordwrap.php#107570
- * @return string word wrapped string
- */
-if (!function_exists(__NAMESPACE__.'utf8_wordwrap')) {
+/**
+  * Takes a string and wraps it to a defined number of characters per line
+  * keeping multibyte characters intact
+  *
+  * Credit to ju1ius for original version of this method
+  * https://www.php.net/manual/en/function.wordwrap.php#107570
+  *
+  * @return string word wrapped string
+  */
+if (false == function_exists(__NAMESPACE__.'\utf8_wordwrap')) {
     function utf8_wordwrap(string $input, int $width = 80, string $break = PHP_EOL, bool $cut = false): string
     {
         // Safety first!
@@ -30,13 +34,15 @@ if (!function_exists(__NAMESPACE__.'utf8_wordwrap')) {
     }
 }
 
-/*
- * Uses utf8_wordwrap() and then splits by $break to create an array of strings
- * no longer than $width.
- * @see utf8_wordwrap()
- * @return array an array of strings
- */
-if (!function_exists(__NAMESPACE__.'utf8_wordwrap_array')) {
+/**
+  * Uses utf8_wordwrap() and then splits by $break to create an array of strings
+  * no longer than $width.
+  *
+  * @see utf8_wordwrap()
+  *
+  * @return array an array of strings
+  */
+if (false == function_exists(__NAMESPACE__.'\utf8_wordwrap_array')) {
     function utf8_wordwrap_array(string $input, int $width = 80, string $break = PHP_EOL, bool $cut = false): array
     {
         $modified = utf8_wordwrap($input, $width, $break, $cut);
@@ -45,14 +51,15 @@ if (!function_exists(__NAMESPACE__.'utf8_wordwrap_array')) {
     }
 }
 
-/*
- * This function will convert $value input to a string but first inspect
- * to see what type of value has been passed in. Allows easy conversion of
- * boolean to true/false literal string value. Also safely converts array,
- * object, resource, and 'unknown type' to string representation.
- * @return string
- */
-if (!function_exists(__NAMESPACE__.'type_sensitive_strval')) {
+/**
+  * This function will convert $value input to a string but first inspect
+  * to see what type of value has been passed in. Allows easy conversion of
+  * boolean to true/false literal string value. Also safely converts array,
+  * object, resource, and 'unknown type' to string representation.
+  *
+  * @return string
+  */
+if (false == function_exists(__NAMESPACE__.'\type_sensitive_strval')) {
     function type_sensitive_strval($value): string
     {
         $result = null;
@@ -83,12 +90,16 @@ if (!function_exists(__NAMESPACE__.'type_sensitive_strval')) {
     }
 }
 
-/*
- * A multibyte safe version of str_pad()
- * Credit to Wes (original author) and Dereckson (PHP7 compatibility update)
- * https://stackoverflow.com/a/27194169
- */
-if (!function_exists(__NAMESPACE__.'mb_str_pad')) {
+/**
+  * A multibyte safe version of str_pad()
+  *
+  * Credit to Wes (original author) and Dereckson (PHP7 compatibility update)
+  * https://stackoverflow.com/a/27194169
+  *
+  * @see https://www.php.net/manual/en/function.str-pad.php
+  * @return string
+  */
+if (false == function_exists(__NAMESPACE__.'\mb_str_pad')) {
     function mb_str_pad(string $input, int $pad_length, string $pad_string = ' ', int $pad_type = STR_PAD_RIGHT, string $encoding = null): string
     {
         $encoding = (
@@ -129,24 +140,24 @@ if (!function_exists(__NAMESPACE__.'mb_str_pad')) {
     }
 }
 
-if (!function_exists(__NAMESPACE__.'replace_placeholders_in_string')) {
-    /**
-     * Replaces all placeholder values in a string with given replacements.
-     *
-     * @param array  $placeholders array containing the names of all
-     *                             placeholders to replace
-     * @param array  $replacements corresponding array of replacement values
-     * @param string $input        the string to operate on
-     * @param bool   $clean        if set to true, unused placeholder values
-     *                             (i.e. were not in $placeholders) in $input
-     *                             will be removed. Default is false
-     * @param string $open         opening tag for a placeholder. Default
-     *                             is '{{'
-     * @param string $close        closing tag for a placeholder. Default
-     *                             is '}}'
-     *
-     * @return string a string with placeholders replaced
-     */
+/**
+ * Replaces all placeholder values in a string with given replacements.
+ *
+ * @param array  $placeholders array containing the names of all
+ *                             placeholders to replace
+ * @param array  $replacements corresponding array of replacement values
+ * @param string $input        the string to operate on
+ * @param bool   $clean        if set to true, unused placeholder values
+ *                             (i.e. were not in $placeholders) in $input
+ *                             will be removed. Default is false
+ * @param string $open         opening tag for a placeholder. Default
+ *                             is '{{'
+ * @param string $close        closing tag for a placeholder. Default
+ *                             is '}}'
+ *
+ * @return string a string with placeholders replaced
+ */
+if (false == function_exists(__NAMESPACE__.'\replace_placeholders_in_string')) {
     function replace_placeholders_in_string(array $placeholders, array $replacements, string $input, bool $clean = false, string $open = '{{', string $close = '}}'): string
     {
         $placeholders = array_map(
@@ -172,16 +183,16 @@ if (!function_exists(__NAMESPACE__.'replace_placeholders_in_string')) {
     }
 }
 
-if (!function_exists(__NAMESPACE__.'random_string')) {
-    /**
-     * Generates a pseudo-random string of specified length.
-     *
-     * @param int    $length total string length (in characters)
-     * @param string $filter runs this filter with preg_replace to remove
-     *                       unwanted characters (default is NULL)
-     *
-     * @return string the resultant, pseudo-random string
-     */
+/**
+ * Generates a pseudo-random string of specified length.
+ *
+ * @param int    $length total string length (in characters)
+ * @param string $filter runs this filter with preg_replace to remove
+ *                       unwanted characters (default is NULL)
+ *
+ * @return string the resultant, pseudo-random string
+ */
+if (false == function_exists(__NAMESPACE__.'\random_string')) {
     function random_string(int $length = 32, string $filter = null): string
     {
         $string = base64_encode(random_bytes($length * 3));
@@ -204,20 +215,20 @@ if (!function_exists(__NAMESPACE__.'random_string')) {
     };
 }
 
-if (!function_exists(__NAMESPACE__.'random_unique_classname')) {
-    /**
-     * Simple way to produce a unique class name.
-     *
-     * @param string $prefix    This string will be prepended to the randomly
-     *                          generated part of the class name. Can only
-     *                          contain characters normally allowed in class
-     *                          names (default is 'a')
-     * @param string $namespace namespace to use when checking for uniqueness.
-     *                          note this is not included in the resultant
-     *                          string (default is NULL)
-     *
-     * @return string A unique, valid, class name string
-     */
+/**
+ * Simple way to produce a unique class name.
+ *
+ * @param string $prefix    This string will be prepended to the randomly
+ *                          generated part of the class name. Can only
+ *                          contain characters normally allowed in class
+ *                          names (default is 'a')
+ * @param string $namespace namespace to use when checking for uniqueness.
+ *                          note this is not included in the resultant
+ *                          string (default is NULL)
+ *
+ * @return string A unique, valid, class name string
+ */
+if (false == function_exists(__NAMESPACE__.'\random_unique_classname')) {
     function random_unique_classname(string $prefix = 'a', string $namespace = null): string
     {
         do {
@@ -226,4 +237,24 @@ if (!function_exists(__NAMESPACE__.'random_unique_classname')) {
 
         return $classname;
     };
+}
+
+/**
+ * Looks for any ampersands (&) in a string, that aren't already encoded
+ * (i.e. &amp;) or part of an encoded character (e.g. &#123;) and replaces
+ * it with &amp;
+ *
+ * @param string $value string to operate on
+ *
+ * @return string $value but with all ampersands (&) encoded
+ */
+if (false == function_exists(__NAMESPACE__.'\encode_ampersands')) {
+    function encode_ampersands(string $value): string
+    {
+        return (string) preg_replace(
+            '/&(?!(#[0-9]+|#x[0-9a-f]+|amp|lt|gt);)/i',
+            '&amp;',
+            trim($value)
+        );
+    }
 }
